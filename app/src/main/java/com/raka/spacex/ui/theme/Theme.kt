@@ -117,7 +117,6 @@ private val LightColorPalette = lightColorScheme(
     onSurfaceVariant = OnSurfaceVariantLight,
 )
 
-
 @Composable
 fun SpaceXTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
