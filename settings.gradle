@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "SpaceX"
+rootProject.name = "Books"
 include ':app'
 include ':data'

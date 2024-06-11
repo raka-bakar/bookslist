@@ -1,4 +1,4 @@
-package com.raka.spacex.ui.theme
+package com.raka.books.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
