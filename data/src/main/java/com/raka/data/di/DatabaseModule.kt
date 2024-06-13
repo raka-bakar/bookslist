@@ -2,8 +2,8 @@ package com.raka.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.raka.data.database.AmazoniaDatabase
-import com.raka.data.database.ProductDao
+import com.raka.data.database.BookDatabase
+import com.raka.data.database.BookDao
 import com.raka.data.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -21,21 +21,21 @@ internal class DatabaseModule {
      */
     @Singleton
     @Provides
-    fun providesDatabase(@ApplicationContext context: Context): AmazoniaDatabase {
+    fun providesDatabase(@ApplicationContext context: Context): BookDatabase {
         return Room.databaseBuilder(
             context,
-            AmazoniaDatabase::class.java,
+            BookDatabase::class.java,
             Constants.DATABASE_NAME
-        ).fallbackToDestructiveMigration().build()
+        ).build()
     }
 
     /**
      * provides room dao
-     * @param amazoniaDatabase of type AmazoniaDatabase
+     * @param booksDatabase of type BookDatabase
      */
     @Provides
     @Singleton
-    fun providesProductsDao(amazoniaDatabase: AmazoniaDatabase): ProductDao {
-        return amazoniaDatabase.productDao()
+    fun providesProductsDao(booksDatabase: BookDatabase): BookDao {
+        return booksDatabase.bookDao()
     }
 }

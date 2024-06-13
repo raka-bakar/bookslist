@@ -1,8 +1,10 @@
 package com.raka.data.di
 
 import com.raka.data.api.ApiService
-import com.raka.data.network.NetworkInterceptor
+import com.raka.data.network.RetryNetworkInterceptor
 import com.raka.data.utils.Constants
+import com.raka.data.utils.Constants.DELAY_TIME_OUT
+import com.raka.data.utils.Constants.RETRY_NETWORK_MAX
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -11,8 +13,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -20,21 +22,30 @@ import javax.inject.Singleton
 internal class NetworkModule {
 
     /**
-     * provides NetworkInterceptor Instance
+     * provides RetryNetworkInterceptor Instance
      */
     @Provides
     @Singleton
-    fun provideNetworkInterceptor() = NetworkInterceptor()
+    fun provideNetworkInterceptor() = RetryNetworkInterceptor(RETRY_NETWORK_MAX)
 
     /**
      * provides okHttp instance
-     * @param networkMonitor of type NetworkMonitor
+     * it RetryNetworkInterceptor for retry mechanism
+     * between each retry there is a delay 2 seconds
+     * @param retryNetworkInterceptor of type RetryNetworkInterceptor
      */
     @Provides
     @Singleton
-    fun provideOkHttp(networkInterceptor: NetworkInterceptor): OkHttpClient {
+    fun provideOkHttp(retryNetworkInterceptor: RetryNetworkInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(networkInterceptor)
+            // Readtimeout is maximum time of inactivity between two data packets when waiting for the server’s response
+            .readTimeout(DELAY_TIME_OUT, TimeUnit.SECONDS)
+            // Connecttimeout is time period in which our client should establish a connection with a target host
+            .connectTimeout(DELAY_TIME_OUT, TimeUnit.SECONDS)
+            // Writetimeout is maximum time of inactivity between two data packets when sending the request to the server
+            .writeTimeout(DELAY_TIME_OUT, TimeUnit.SECONDS)
+            .addInterceptor(retryNetworkInterceptor)
+            .retryOnConnectionFailure(true)
             .build()
     }
 
@@ -72,6 +83,5 @@ internal class NetworkModule {
             .baseUrl(Constants.BASE_URL)
             .client(httpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
 }

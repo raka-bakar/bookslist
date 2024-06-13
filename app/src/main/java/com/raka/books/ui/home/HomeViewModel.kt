@@ -1,0 +1,26 @@
+package com.raka.books.ui.home
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.raka.books.usecase.GetBooksUseCase
+import com.raka.data.CallResult
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.plus
+import javax.inject.Inject
+
+@HiltViewModel
+class HomeViewModel @Inject constructor(getBooksUseCase: GetBooksUseCase) :
+    ViewModel() {
+
+    /**
+     * booksList of Flow type
+     * it is being observed by HomeScreen
+     */
+    val booksList = getBooksUseCase.getBooks().stateIn(
+        viewModelScope + Dispatchers.IO,
+        SharingStarted.WhileSubscribed(), CallResult.loading()
+    )
+}
