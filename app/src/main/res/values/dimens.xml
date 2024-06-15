@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="font_size_extra_large_item">30sp</dimen>
+    <dimen name="font_size_large_item">16sp</dimen>
+    <dimen name="font_size_medium_item">12sp</dimen>
+    <dimen name="padding_medium">10dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="loading_circle_size">64dp</dimen>
+    <dimen name="image_size">75dp</dimen>
+    <dimen name="detail_container_size">250dp</dimen>
+    <dimen name="detail_image_size">150dp</dimen>
+</resources>

@@ -48,4 +48,15 @@ data class CallResult<out T> private constructor(
             return CallResult(Status.LOADING, data)
         }
     }
+    /**
+     * Helper method to convert data in a call result
+     */
+    fun <M> copyConvert(converter: (T?) -> M?) =
+        CallResult<M>(status, converter(data), extra, code, message)
+
+    fun isSuccess(): Boolean =
+        status == Status.SUCCESS
+
+    fun isFail(): Boolean =
+        status == Status.ERROR
 }

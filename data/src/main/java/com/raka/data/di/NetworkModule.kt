@@ -4,7 +4,7 @@ import com.raka.data.api.ApiService
 import com.raka.data.network.RetryNetworkInterceptor
 import com.raka.data.utils.Constants
 import com.raka.data.utils.Constants.DELAY_TIME_OUT
-import com.raka.data.utils.Constants.RETRY_NETWORK_MAX
+import com.raka.data.utils.Constants.RETRY_ATTEMPT_MAX
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -26,7 +26,7 @@ internal class NetworkModule {
      */
     @Provides
     @Singleton
-    fun provideNetworkInterceptor() = RetryNetworkInterceptor(RETRY_NETWORK_MAX)
+    fun provideNetworkInterceptor() = RetryNetworkInterceptor()
 
     /**
      * provides okHttp instance
@@ -38,14 +38,7 @@ internal class NetworkModule {
     @Singleton
     fun provideOkHttp(retryNetworkInterceptor: RetryNetworkInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-            // Readtimeout is maximum time of inactivity between two data packets when waiting for the server’s response
-            .readTimeout(DELAY_TIME_OUT, TimeUnit.SECONDS)
-            // Connecttimeout is time period in which our client should establish a connection with a target host
-            .connectTimeout(DELAY_TIME_OUT, TimeUnit.SECONDS)
-            // Writetimeout is maximum time of inactivity between two data packets when sending the request to the server
-            .writeTimeout(DELAY_TIME_OUT, TimeUnit.SECONDS)
             .addInterceptor(retryNetworkInterceptor)
-            .retryOnConnectionFailure(true)
             .build()
     }
 

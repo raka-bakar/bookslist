@@ -1,10 +1,14 @@
 package com.raka.data.model
+
 import com.squareup.moshi.Json
 
-/**
- * Data class to catch Api response of Book
- */
-internal data class BookResponse(
+data class BookResponse(
+
+	@Json(name="Response")
+	val response: List<ResponseItem?>? = null
+)
+
+data class ResponseItem(
 
 	@Json(name="image")
 	val image: String? = null,
@@ -27,4 +31,3 @@ internal data class BookResponse(
 	@Json(name="titlee")
 	val titlee: String? = null
 )
-

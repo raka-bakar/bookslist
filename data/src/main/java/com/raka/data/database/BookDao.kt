@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.raka.data.model.BookItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -23,7 +24,7 @@ internal interface BookDao {
      */
     @Transaction
     @Query("SELECT id, title,description,image FROM book")
-    fun loadBooks(): List<DBBook>
+    fun loadBooks(): List<BookItem>
 
     /**
      * load a book from table book

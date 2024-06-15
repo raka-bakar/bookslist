@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface AppModule {
+class AppModule {
     @Singleton
     @Provides
     fun providesApplication(@ApplicationContext context: Context): BooksApp =
