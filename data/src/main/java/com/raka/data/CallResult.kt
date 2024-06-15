@@ -48,6 +48,7 @@ data class CallResult<out T> private constructor(
             return CallResult(Status.LOADING, data)
         }
     }
+
     /**
      * Helper method to convert data in a call result
      */

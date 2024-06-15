@@ -3,8 +3,6 @@ package com.raka.data.di
 import com.raka.data.api.ApiService
 import com.raka.data.network.RetryNetworkInterceptor
 import com.raka.data.utils.Constants
-import com.raka.data.utils.Constants.DELAY_TIME_OUT
-import com.raka.data.utils.Constants.RETRY_ATTEMPT_MAX
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -14,7 +12,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module

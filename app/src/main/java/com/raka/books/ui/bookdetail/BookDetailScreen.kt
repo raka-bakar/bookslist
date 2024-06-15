@@ -23,6 +23,11 @@ import com.raka.books.ui.components.LoadingView
 import com.raka.data.CallResult
 import com.raka.data.model.BookDetail
 
+/**
+ * Component of Home Screen where it display a list of Books
+ * @param callResult result state of the call to get a detail data of book
+ * @param onBackClicked higher function to return to previous page
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookDetailScreen(

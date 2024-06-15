@@ -1,7 +1,6 @@
 package com.raka.data.api
 
 import com.raka.data.CallResult
-import com.raka.data.model.BookResponse
 import com.raka.data.model.ResponseItem
 import okhttp3.internal.toHeaderList
 import retrofit2.Response

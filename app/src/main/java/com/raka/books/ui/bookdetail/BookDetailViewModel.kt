@@ -23,12 +23,12 @@ class BookDetailViewModel @Inject constructor(
     private val args = MainNavigation.Detail.Arguments(savedStateHandle)
 
     // getting argument from SavedStateHandle in MainNavigation
-    val idBook = args.idBook.get()
+    private val idBook = args.idBook.get()
 
     /**
-    * bookDetail of Flow type
-    * it is being observed by BookDetailScreen
-    */
+     * bookDetail of Flow type
+     * it is being observed by BookDetailScreen
+     */
     val bookDetail = getBookUseCase.getBook(idBook).stateIn(
         viewModelScope + Dispatchers.IO,
         SharingStarted.WhileSubscribed(), CallResult.loading()

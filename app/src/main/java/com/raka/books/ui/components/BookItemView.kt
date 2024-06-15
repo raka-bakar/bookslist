@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -22,6 +23,11 @@ import coil.compose.AsyncImage
 import com.raka.books.R
 import com.raka.data.model.BookItem
 
+/**
+ * Component that shows Book Item
+ * @param bookItem of type BookItem
+ * @param navigateToDetail to navigate to detail screen, ID of the book as a parameter
+ */
 @Composable
 fun BookItemView(
     bookItem: BookItem,
@@ -73,6 +79,7 @@ fun BookItemView(
             text = bookItem.description,
             overflow = TextOverflow.Ellipsis,
             fontSize = dimensionResource(id = R.dimen.font_size_medium_item).value.sp,
+            lineHeight = dimensionResource(id = R.dimen.line_height_description).value.sp,
             modifier = Modifier
                 .constrainAs(descriptionRef) {
                     top.linkTo(titleRef.bottom)
@@ -83,7 +90,6 @@ fun BookItemView(
                 .padding(
                     start = dimensionResource(id = R.dimen.padding_small),
                     end = dimensionResource(id = R.dimen.padding_small),
-                    top = dimensionResource(id = R.dimen.padding_small),
                     bottom = dimensionResource(id = R.dimen.padding_medium)
                 ),
             color = Color.White,

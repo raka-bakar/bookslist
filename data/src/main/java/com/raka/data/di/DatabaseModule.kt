@@ -2,8 +2,8 @@ package com.raka.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.raka.data.database.BookDatabase
 import com.raka.data.database.BookDao
+import com.raka.data.database.BookDatabase
 import com.raka.data.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -15,13 +15,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 internal class DatabaseModule {
+
     /**
      * provides room database instance
      * @param context
      */
     @Singleton
     @Provides
-    fun providesDatabase(@ApplicationContext context: Context): BookDatabase {
+    fun providesDatabase(
+        @ApplicationContext context: Context
+    ): BookDatabase {
         return Room.databaseBuilder(
             context,
             BookDatabase::class.java,

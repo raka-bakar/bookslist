@@ -13,5 +13,7 @@ data class BookItem(
     @ColumnInfo(name = "description")
     val description: String = "",
     @ColumnInfo(name = "image")
-    val image: String = ""
+    val image: String = "",
+    @ColumnInfo(name = "release_date")
+    val releaseDate: String = ""
 )

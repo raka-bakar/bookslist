@@ -38,7 +38,10 @@ sealed class MainNavigation(override val route: String) : Navigation(route) {
             composable(route = getFullRoute(), arguments = getArguments()) {
                 val viewModel: HomeViewModel = hiltViewModel()
                 val callResult by viewModel.booksList.data.collectAsStateWithLifecycle(initialValue = CallResult.loading())
-                HomeScreen(callResult = callResult, onRetryButtonClick = viewModel::refreshBookList ) {
+                HomeScreen(
+                    callResult = callResult,
+                    onRetryButtonClick = viewModel::refreshBookList
+                ) {
                     controller.navigateTo(it)
                 }
             }
@@ -76,7 +79,7 @@ sealed class MainNavigation(override val route: String) : Navigation(route) {
             composable(route = getFullRoute(), arguments = getArguments()) {
                 val viewModel: BookDetailViewModel = hiltViewModel()
                 val callResult by viewModel.bookDetail.collectAsStateWithLifecycle()
-                BookDetailScreen(callResult = callResult){
+                BookDetailScreen(callResult = callResult) {
                     controller.popBackStack()
                 }
             }

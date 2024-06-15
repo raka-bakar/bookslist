@@ -12,7 +12,7 @@ import javax.inject.Inject
 interface GetBookUseCase {
     /**
      * Get book detail by id
-     * @param id of type Int
+     * @param id of the book, type Int
      * @return Flow of CallResult of Book detail type
      */
     fun getBook(id: Int): Flow<CallResult<BookDetail>>

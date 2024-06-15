@@ -16,6 +16,7 @@ import com.raka.books.R
 /**
  * Component that shows Error message view
  * @param message error message of type String
+ * @param onButtonClick to handle click listener
  */
 @Composable
 fun EmptyDataView(
@@ -36,6 +37,4 @@ fun EmptyDataView(
             Text(text = stringResource(id = R.string.retry_label))
         }
     }
-
-
 }

@@ -16,7 +16,7 @@ abstract class Navigation(open val route: String) {
     protected open fun getArguments(): List<NamedNavArgument> = emptyList()
 
     //get the full route with all nav arguments for destination construction
-    protected fun getFullRoute() = getArguments().fold(route){pre,value->
+    protected fun getFullRoute() = getArguments().fold(route) { pre, value ->
         "$pre/{${value.name}}"
     }
 
