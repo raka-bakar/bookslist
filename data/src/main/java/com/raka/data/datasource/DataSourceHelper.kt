@@ -1,9 +1,7 @@
 package com.raka.data.datasource
 
 import android.os.Build
-import com.raka.data.database.DBBook
-import com.raka.data.model.BookDetail
-import com.raka.data.model.BookItem
+import com.raka.data.model.Book
 import com.raka.data.model.ResponseItem
 import timber.log.Timber
 import java.text.ParseException
@@ -14,34 +12,20 @@ import javax.inject.Inject
 /**
  * A helper class for data source
  */
-internal interface DataSourceHelper {
+interface DataSourceHelper {
     /**
-     * Helper method that maps BooksResponse to DBBook
-     * @param listResponseItem of type BookResponse
-     * @return List of DBBook
+     * Helper method that maps ResponseItem to Book
+     * @param listResponseItem of type ResponseItem
+     * @return List of Book
      */
-    fun mapBookResponseToDBBook(listResponseItem: List<ResponseItem?>): List<DBBook>
-
-    /**
-     * Helper method that maps DBBook to BookDetail
-     * @param dbBook of type DBBook
-     * @return List of BookDetail
-     */
-    fun mapDbBookToBookDetail(dbBook: DBBook): BookDetail
-
-    /**
-     * Helper method that maps bookResponse to BookItem
-     * @param listResponseItem of type BookResponse
-     * @return List of BookItem
-     */
-    fun mapBookResponseToBookItem(listResponseItem: List<ResponseItem?>): List<BookItem>
+    fun mapBookResponseToBook(listResponseItem: List<ResponseItem?>): List<Book>
 
     /**
      * format date from x/x/xxxx to Wed, Jul, '20
      * @param date type String
      * @return New date format type string
      */
-    fun formatSortDate(date: String): String
+    fun formatDetailDate(date: String): String
 
     /**
      * check if ID of books is minus or null
@@ -65,53 +49,21 @@ internal interface DataSourceHelper {
 
 internal class DataSourceHelperImpl @Inject constructor() : DataSourceHelper {
 
-    override fun mapBookResponseToDBBook(listResponseItem: List<ResponseItem?>): List<DBBook> {
-        val newList: MutableList<DBBook> = mutableListOf()
+    override fun mapBookResponseToBook(listResponseItem: List<ResponseItem?>): List<Book> {
+        val newList: MutableList<Book> = mutableListOf()
         listResponseItem.sortedByDescending { formatItemDate(it?.releaseDate) }.forEach { item ->
             item?.let { responseItem ->
                 val title =
                     if (responseItem.titlee?.isNotEmpty() == true) responseItem.titlee else responseItem.title
                 val id = checkId(responseItem.id)
                 newList.add(
-                    DBBook(
+                    Book(
                         id = id,
                         author = responseItem.author ?: "",
                         image = responseItem.image ?: "",
                         releaseDate = responseItem.releaseDate ?: "",
                         description = responseItem.description ?: "",
                         title = title ?: ""
-                    )
-                )
-            }
-        }
-        return newList
-    }
-
-    override fun mapDbBookToBookDetail(dbBook: DBBook): BookDetail {
-        return BookDetail(
-            id = dbBook.id,
-            author = dbBook.author,
-            description = dbBook.description,
-            image = dbBook.image,
-            releaseDate = formatSortDate(dbBook.releaseDate),
-            title = dbBook.title
-        )
-    }
-
-    override fun mapBookResponseToBookItem(listResponseItem: List<ResponseItem?>): List<BookItem> {
-        val newList: MutableList<BookItem> = mutableListOf()
-        listResponseItem.sortedByDescending { formatItemDate(it?.releaseDate) }.forEach { item ->
-            item?.let { responseItem ->
-                val title =
-                    if (responseItem.titlee?.isNotEmpty() == true) responseItem.titlee else responseItem.title
-                val id = checkId(responseItem.id)
-                newList.add(
-                    BookItem(
-                        id = id,
-                        title = title ?: "",
-                        description = responseItem.description ?: "",
-                        image = responseItem.image ?: "",
-                        releaseDate = responseItem.releaseDate ?: ""
                     )
                 )
             }
@@ -128,23 +80,27 @@ internal class DataSourceHelperImpl @Inject constructor() : DataSourceHelper {
     }
 
     override fun formatItemDate(date: String?): Long {
+        val yearFormat = SimpleDateFormat("yyyy", Locale.ENGLISH)
+        val invalidDate = yearFormat.parse("-9999")?.time ?: 0
+        if (date == null ){
+            return invalidDate
+        }
+
         try {
-            val formatter = if (date?.length == 4) {
-                SimpleDateFormat("yyyy", Locale.ENGLISH)
+            val formatter = if (date.length == 4) {
+                yearFormat
             } else {
                 SimpleDateFormat("M/dd/yyyy", Locale.ENGLISH)
             }
-            return date?.let { formatter.parse(it)?.time } ?: 0
+            return date.let { formatter.parse(it)?.time } ?: invalidDate
         } catch (e: ParseException) {
-            // if format is unknown, will return the oldest date/ send to the bottom of the list
+            // if format is unknown, will return the invalid date and put in the bottom of the list
             Timber.e(e)
-            val format = SimpleDateFormat("yyyy", Locale.ENGLISH)
-            val result = format.parse("-9999")?.time ?: 0
-            return result
+            return invalidDate
         }
     }
 
-    override fun formatSortDate(date: String): String {
+    override fun formatDetailDate(date: String): String {
         return try {
             val inputFormat = SimpleDateFormat("M/dd/yyyy", Locale.US)
             val outputFormat = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -153,7 +109,7 @@ internal class DataSourceHelperImpl @Inject constructor() : DataSourceHelper {
                 SimpleDateFormat("EEE, MMM d, ''yy", Locale.US)
             }
             val newDate = date.let { inputFormat.parse(it) }
-            newDate?.let { outputFormat.format(it) } ?: ""
+            newDate?.let { outputFormat.format(it) } ?: date
         } catch (e: ParseException) {
             // if format is unknown, will return the original date
             Timber.e(e)

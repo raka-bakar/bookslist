@@ -5,32 +5,32 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.raka.data.model.BookItem
+import com.raka.data.model.Book
 
 @Dao
-internal interface BookDao {
+interface BookDao {
 
     /**
-     * insert list of DBBook
-     *  @param list  list of DBBook
+     * insert list of Book
+     *  @param list  list of Book
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBooks(list: List<DBBook>)
+    fun insertBooks(list: List<Book>)
 
     /**
      * load all books from table book
-     *  @return flow type of List<DBBook>
+     *  @return flow type of List<Book>
      */
     @Transaction
-    @Query("SELECT id, title,description,image, release_date FROM book")
-    fun loadBooks(): List<BookItem>
+    @Query("SELECT * FROM book")
+    fun loadBooks(): List<Book>
 
     /**
      * load a book from table book
      * @param id of book
-     *  @return flow type of DBBook
+     *  @return flow type of Book
      */
     @Transaction
     @Query("SELECT * FROM book WHERE id = :id")
-    fun loadBook(id: Int): DBBook
+    fun loadBook(id: Int): Book
 }

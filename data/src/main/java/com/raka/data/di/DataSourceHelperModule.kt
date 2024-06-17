@@ -7,7 +7,7 @@ import dagger.hilt.components.SingletonComponent
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
-internal interface DataSourceHelper {
+internal interface DataSourceHelperModule {
     /**
      * provides a helper method to get DataSource Instance
      */

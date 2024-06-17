@@ -40,7 +40,7 @@ sealed class MainNavigation(override val route: String) : Navigation(route) {
                 val callResult by viewModel.booksList.data.collectAsStateWithLifecycle(initialValue = CallResult.loading())
                 HomeScreen(
                     callResult = callResult,
-                    onRetryButtonClick = viewModel::refreshBookList
+                    onRetryButtonClick = { viewModel.booksList.refresh() }
                 ) {
                     controller.navigateTo(it)
                 }

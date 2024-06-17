@@ -1,7 +1,7 @@
 package com.raka.data
 
 import android.content.Context
-import com.raka.data.di.DataSourceHelper
+import com.raka.data.di.DataSourceHelperModule
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
@@ -11,7 +11,7 @@ import javax.inject.Inject
 class DataProvider @Inject constructor(context: Context) {
     private val dataSourceHelper =
         EntryPointAccessors
-            .fromApplication(context = context, entryPoint = DataSourceHelper::class.java)
+            .fromApplication(context = context, entryPoint = DataSourceHelperModule::class.java)
 
     fun loadBooks() = dataSourceHelper.getDataSource().loadBooks()
 

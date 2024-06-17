@@ -15,7 +15,7 @@ import com.raka.books.ui.components.BookItemView
 import com.raka.books.ui.components.EmptyDataView
 import com.raka.books.ui.components.LoadingView
 import com.raka.data.CallResult
-import com.raka.data.model.BookItem
+import com.raka.data.model.Book
 
 /**
  * Component of Home Screen where it display a list of Books
@@ -25,7 +25,7 @@ import com.raka.data.model.BookItem
  */
 @Composable
 fun HomeScreen(
-    callResult: CallResult<List<BookItem>>,
+    callResult: CallResult<List<Book>>,
     onRetryButtonClick: () -> Unit,
     navigateToDetail: (Int) -> Unit
 ) {
@@ -52,7 +52,7 @@ fun HomeScreen(
                         onButtonClick = onRetryButtonClick
                     )
                 } else {
-                    RecordingListView(list = list, onItemClicked = navigateToDetail)
+                    BookListView(list = list, onItemClicked = navigateToDetail)
                 }
             }
         }
@@ -65,8 +65,8 @@ fun HomeScreen(
  *  @param onItemClicked handle for to navigate to detail screen
  */
 @Composable
-private fun RecordingListView(
-    list: List<BookItem>,
+private fun BookListView(
+    list: List<Book>,
     onItemClicked: (Int) -> Unit,
 ) {
     LazyColumn(
@@ -75,7 +75,7 @@ private fun RecordingListView(
             .testTag("HomeList")
     ) {
         items(count = list.size, key = { list[it].id }) {
-            BookItemView(bookItem = list[it], navigateToDetail = onItemClicked)
+            BookItemView(book = list[it], navigateToDetail = onItemClicked)
         }
     }
 }

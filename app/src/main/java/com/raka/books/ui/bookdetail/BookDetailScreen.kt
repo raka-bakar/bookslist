@@ -16,12 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.raka.books.R
 import com.raka.books.ui.components.BookDetailView
 import com.raka.books.ui.components.LoadingView
 import com.raka.data.CallResult
-import com.raka.data.model.BookDetail
+import com.raka.data.model.Book
 
 /**
  * Component of Home Screen where it display a list of Books
@@ -31,7 +32,7 @@ import com.raka.data.model.BookDetail
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookDetailScreen(
-    callResult: CallResult<BookDetail>,
+    callResult: CallResult<Book>,
     onBackClicked: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -47,7 +48,8 @@ fun BookDetailScreen(
             },
             title = {},
             colors = TopAppBarDefaults
-                .topAppBarColors(containerColor = MaterialTheme.colorScheme.onSecondaryContainer)
+                .topAppBarColors(containerColor = Color.Gray),
+            modifier = Modifier.testTag("DetailTopBar")
         )
 
         when (callResult.status) {

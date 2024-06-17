@@ -22,14 +22,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.raka.books.R
-import com.raka.data.model.BookDetail
+import com.raka.data.model.Book
 
 /**
  * Component that shows Book Detail
- * @param bookDetail of type BookDetail
+ * @param book of type Book
  */
 @Composable
-fun BookDetailView(bookDetail: BookDetail) {
+fun BookDetailView(book: Book) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -38,7 +38,7 @@ fun BookDetailView(bookDetail: BookDetail) {
     ) {
         AsyncImage(
             error = painterResource(id = R.drawable.ic_no_image),
-            model = bookDetail.image,
+            model = book.image,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
@@ -48,7 +48,7 @@ fun BookDetailView(bookDetail: BookDetail) {
                 )
         )
         Text(
-            text = bookDetail.title,
+            text = book.title,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.titleLarge,
@@ -61,7 +61,7 @@ fun BookDetailView(bookDetail: BookDetail) {
                 )
         )
         Text(
-            text = bookDetail.releaseDate,
+            text = book.releaseDate,
             textAlign = TextAlign.End,
             modifier = Modifier
                 .fillMaxWidth()
@@ -71,7 +71,7 @@ fun BookDetailView(bookDetail: BookDetail) {
                 )
         )
         Text(
-            text = bookDetail.description,
+            text = book.description,
             textAlign = TextAlign.Start,
             modifier = Modifier
                 .fillMaxWidth()
@@ -100,7 +100,7 @@ fun BookDetailView(bookDetail: BookDetail) {
                         start = dimensionResource(id = R.dimen.padding_medium),
                     )
             )
-            Text(text = bookDetail.author,
+            Text(text = book.author,
                 modifier = Modifier
                     .constrainAs(emailRef) {
                         start.linkTo(authorRef.end)

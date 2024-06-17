@@ -15,22 +15,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.raka.books.R
-import com.raka.data.model.BookItem
+import com.raka.data.model.Book
 
 /**
  * Component that shows Book Item
- * @param bookItem of type BookItem
+ * @param book of type Book
  * @param navigateToDetail to navigate to detail screen, ID of the book as a parameter
  */
 @Composable
 fun BookItemView(
-    bookItem: BookItem,
+    book: Book,
     navigateToDetail: (Int) -> Unit
 ) {
     ConstraintLayout(
@@ -40,14 +39,14 @@ fun BookItemView(
                 dimensionResource(id = R.dimen.padding_medium)
             )
             .background(Color.Gray)
-            .clickable { navigateToDetail(bookItem.id) }
+            .clickable { navigateToDetail(book.id) }
     ) {
 
         val (imageRef, titleRef, descriptionRef) = createRefs()
 
         AsyncImage(
             error = painterResource(id = R.drawable.ic_no_image),
-            model = bookItem.image,
+            model = book.image,
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -61,7 +60,7 @@ fun BookItemView(
         )
 
         Text(
-            text = bookItem.title,
+            text = book.title,
             color = Color.White,
             fontSize = dimensionResource(id = R.dimen.font_size_large_item).value.sp,
             modifier = Modifier
@@ -76,7 +75,7 @@ fun BookItemView(
         )
 
         Text(
-            text = bookItem.description,
+            text = book.description,
             overflow = TextOverflow.Ellipsis,
             fontSize = dimensionResource(id = R.dimen.font_size_medium_item).value.sp,
             lineHeight = dimensionResource(id = R.dimen.line_height_description).value.sp,
