@@ -1,5 +1,7 @@
 package com.raka.books.ui.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
@@ -76,7 +78,21 @@ sealed class MainNavigation(override val route: String) : Navigation(route) {
 
         context(NavGraphBuilder)
         override fun compose(controller: NavController) {
-            composable(route = getFullRoute(), arguments = getArguments()) {
+            composable(route = getFullRoute(), arguments = getArguments(),
+                // sliding transition to enter or exit Detail screen
+                enterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                        animationSpec = tween(700)
+                    )
+                },
+                exitTransition = {
+                    slideOutOfContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                        animationSpec = tween(700)
+                    )
+                }
+                ) {
                 val viewModel: BookDetailViewModel = hiltViewModel()
                 val callResult by viewModel.bookDetail.collectAsStateWithLifecycle()
                 BookDetailScreen(callResult = callResult) {
