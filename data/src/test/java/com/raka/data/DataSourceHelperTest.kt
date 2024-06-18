@@ -7,7 +7,7 @@ import com.raka.data.model.ResponseItem
 import org.junit.Assert
 import org.junit.Test
 
-class DataSourceHelperTest {
+internal class DataSourceHelperTest {
     private var sut: DataSourceHelper = DataSourceHelperImpl()
     private val bookTest1 = Book(
         id = 1, image = "https:image.url", releaseDate = "1/2/1923",

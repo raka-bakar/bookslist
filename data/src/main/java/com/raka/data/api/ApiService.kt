@@ -4,11 +4,11 @@ import com.raka.data.model.ResponseItem
 import retrofit2.Response
 import retrofit2.http.GET
 
-interface ApiService {
+internal interface ApiService {
 
     /**
      * load list of All books
-     * @return Response] type of BooksResponse
+     * @return Response type of list of ResponseItem
      */
     @GET(" ")
     suspend fun loadBooks(): Response<List<ResponseItem>>

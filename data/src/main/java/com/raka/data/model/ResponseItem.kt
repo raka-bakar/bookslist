@@ -2,7 +2,7 @@ package com.raka.data.model
 
 import com.squareup.moshi.Json
 
-data class ResponseItem(
+internal data class ResponseItem(
 
     @Json(name = "image")
     val image: String? = null,

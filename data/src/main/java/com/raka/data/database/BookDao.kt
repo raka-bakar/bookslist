@@ -8,7 +8,7 @@ import androidx.room.Transaction
 import com.raka.data.model.Book
 
 @Dao
-interface BookDao {
+internal interface BookDao {
 
     /**
      * insert list of Book

@@ -1,12 +1,10 @@
 package com.raka.data.datasource
 
-import android.util.Log
 import com.raka.data.CallResult
 import com.raka.data.api.ApiService
 import com.raka.data.database.BookDao
 import com.raka.data.model.Book
 import com.raka.data.model.ResponseItem
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -62,12 +60,12 @@ internal class DataSourceImpl @Inject constructor(
                     val listBook: List<Book> = helper.mapBookResponseToBook(data)
 
                     // save dbBooks to local database
-                    launch{ bookDao.insertBooks(listBook) }
+                    launch { bookDao.insertBooks(listBook) }
 
                     emit(CallResult.success(listBook))
                 } else if (response.isFail()) {
                     // when network call fails, load from local database
-                   loadFromLocalDatabase(errorResult)
+                    loadFromLocalDatabase(errorResult)
                 }
             } catch (e: Exception) {
                 Timber.e(e)
@@ -76,19 +74,20 @@ internal class DataSourceImpl @Inject constructor(
         }
     }
 
-    private fun loadFromLocalDatabase(errorResult: CallResult<List<Book>>): Flow<CallResult<List<Book>>> = flow {
-        val localData = bookDao.loadBooks()
+    private fun loadFromLocalDatabase(errorResult: CallResult<List<Book>>): Flow<CallResult<List<Book>>> =
+        flow {
+            val localData = bookDao.loadBooks()
 
-        if (localData.isEmpty()) {
-            emit(errorResult)
-        } else {
-            emit(CallResult.success(localData.sortedByDescending {
-                helper.formatItemDate(
-                    it.releaseDate
-                )
-            }))
+            if (localData.isEmpty()) {
+                emit(errorResult)
+            } else {
+                emit(CallResult.success(localData.sortedByDescending {
+                    helper.formatItemDate(
+                        it.releaseDate
+                    )
+                }))
+            }
         }
-    }
 
     private fun convertResponse(response: Response<List<ResponseItem>>): CallResult<List<ResponseItem>> {
         val body = response.body()

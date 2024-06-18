@@ -12,7 +12,7 @@ import javax.inject.Inject
 /**
  * A helper class for data source
  */
-interface DataSourceHelper {
+internal interface DataSourceHelper {
     /**
      * Helper method that maps ResponseItem to Book
      * @param listResponseItem of type ResponseItem

@@ -18,7 +18,7 @@ import org.mockito.Mockito
 import org.mockito.kotlin.verify
 import retrofit2.Response
 
-class DataSourceTest {
+internal class DataSourceTest {
 
     val apiService = Mockito.mock(ApiService::class.java)
     val dao = Mockito.mock(BookDao::class.java)
