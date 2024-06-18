@@ -1,12 +1,19 @@
 ﻿Programming Language: Kotlin
+ 
 Architecture : MVVM + Modularization
+
 MinSdk: 23
+
 TargetSdk: 34
+
 Android Studio Version : Jellyfish 2023.3.1
 
 the projects has two modules :
+
 data module -> it provides the access to data source, either from asset file or local database
+
 app -> it contains the app itself where there are all UIs and resources.
+
 techstack :
 1. Jetpack Compose
 2. Jetpack Navigation
