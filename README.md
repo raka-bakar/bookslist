@@ -22,7 +22,8 @@ techstack :
 The app can handle the following edge cases:
 1. Unknown date format beside "M/dd/yyyy" and "YYYY"
 2. Minus value of book ID
-3. Network error, will retry 3 times with delay 2 seconds for each call
+3. when URL image returns error, display "no image" image
+4. Network error, will retry 3 times with delay 2 seconds for each call
 
 Screenshots : 
 
