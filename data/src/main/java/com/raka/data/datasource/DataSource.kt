@@ -1,5 +1,6 @@
 package com.raka.data.datasource
 
+import android.util.Log
 import com.raka.data.CallResult
 import com.raka.data.api.ApiService
 import com.raka.data.database.BookDao
@@ -55,7 +56,6 @@ internal class DataSourceImpl @Inject constructor(
             try {
                 val responseCall = apiService.loadBooks()
                 val response = convertResponse(responseCall)
-
                 if (response.isSuccess() && response.data != null) {
                     // when network call success
                     val data: List<ResponseItem> = response.data
@@ -70,6 +70,7 @@ internal class DataSourceImpl @Inject constructor(
                    loadFromLocalDatabase(errorResult)
                 }
             } catch (e: Exception) {
+                Timber.e(e)
                 emit(errorResult)
             }
         }
