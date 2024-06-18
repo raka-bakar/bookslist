@@ -18,7 +18,7 @@ techstack :
 8. Room database
 9. Mockito
 10. Timber
-11. 
+
 The app can handle the following edge cases:
 1. Unknown date format beside "M/dd/yyyy" and "YYYY"
 2. Minus value of book ID
