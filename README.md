@@ -7,12 +7,6 @@ Android Studio Version : Jellyfish 2023.3.1
 the projects has two modules :
 data module -> it provides the access to data source, either from asset file or local database
 app -> it contains the app itself where there are all UIs and resources.
-
-The app can handle the following edge cases:
-1. Unknown date format beside "M/dd/yyyy" and "YYYY"
-2. Minus value of book ID
-3. Network error, will retry 3 times with delay 2 seconds for each call
-
 techstack :
 1. Jetpack Compose
 2. Jetpack Navigation
@@ -24,6 +18,11 @@ techstack :
 8. Room database
 9. Mockito
 10. Timber
+11. 
+The app can handle the following edge cases:
+1. Unknown date format beside "M/dd/yyyy" and "YYYY"
+2. Minus value of book ID
+3. Network error, will retry 3 times with delay 2 seconds for each call
 
 Screenshots : 
 
