@@ -8,7 +8,7 @@ TargetSdk: 34
 
 Android Studio Version : Jellyfish 2023.3.1
 
-the projects has two modules :
+the project has two modules :
 
 data module -> it provides the access to data source, either from asset file or local database
 
