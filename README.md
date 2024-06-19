@@ -8,6 +8,10 @@ TargetSdk: 34
 
 Android Studio Version : Jellyfish 2023.3.1
 
+This project shows a list of books which is sorted by the release date, from the latest to the oldest.
+The data is saved into the local database so when there is no internet connection or network error, it will load from the local database.
+It has 2 screens, the first screen is where the list of books shown. The second screen is where the detail information of the book is shown.
+
 the project has two modules :
 
 data module -> it provides the access to data source, either from asset file or local database
